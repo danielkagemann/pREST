@@ -23,9 +23,12 @@ class Controller {
     $this->log->write($err);
   }
 
-  function __construct() {
+  /**
+   * constructor with optional logfilepath
+   */
+  function __construct($logfile = NULL) {
       $this->req = [];
-      $this->log = new Log('./logs/output.log');
+      $this->log = new Log($logfile === NULLL ? './logs/output.log' : $logfile);
       $this->handleError = function($err) {
        $this->defaultError($err);
       };
@@ -95,6 +98,9 @@ class Controller {
     }
   }
 
+  /**
+   * adding a route 
+   */
   function route($uri, $callback) {
 
     $this->log->write("adding $uri");
